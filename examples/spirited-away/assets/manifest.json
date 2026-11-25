@@ -1,0 +1,194 @@
+{
+  "act1_torii_gate": {
+    "file": "assets/cutouts_webp/act1_torii_gate.webp",
+    "w": 960,
+    "h": 857,
+    "aspect": 1.1202
+  },
+  "act1_tunnel": {
+    "file": "assets/cutouts_webp/act1_tunnel.webp",
+    "w": 960,
+    "h": 924,
+    "aspect": 1.039
+  },
+  "act1_statue": {
+    "file": "assets/cutouts_webp/act1_statue.webp",
+    "w": 720,
+    "h": 636,
+    "aspect": 1.1321
+  },
+  "act1_maple_tree": {
+    "file": "assets/cutouts_webp/act1_maple_tree.webp",
+    "w": 713,
+    "h": 720,
+    "aspect": 0.9903
+  },
+  "act1_moss_bush": {
+    "file": "assets/cutouts_webp/act1_moss_bush.webp",
+    "w": 720,
+    "h": 478,
+    "aspect": 1.5063
+  },
+  "act1_stone_lantern": {
+    "file": "assets/cutouts_webp/act1_stone_lantern.webp",
+    "w": 412,
+    "h": 720,
+    "aspect": 0.5722
+  },
+  "act2_chihiro": {
+    "file": "assets/cutouts_webp/act2_chihiro.webp",
+    "w": 398,
+    "h": 800,
+    "aspect": 0.4975
+  },
+  "act2_stall_left": {
+    "file": "assets/cutouts_webp/act2_stall_left.webp",
+    "w": 960,
+    "h": 926,
+    "aspect": 1.0367
+  },
+  "act2_stall_right": {
+    "file": "assets/cutouts_webp/act2_stall_right.webp",
+    "w": 960,
+    "h": 942,
+    "aspect": 1.0191
+  },
+  "act2_ghost_spirit": {
+    "file": "assets/cutouts_webp/act2_ghost_spirit.webp",
+    "w": 485,
+    "h": 720,
+    "aspect": 0.6736
+  },
+  "act2_radish_spirit": {
+    "file": "assets/cutouts_webp/act2_radish_spirit.webp",
+    "w": 585,
+    "h": 720,
+    "aspect": 0.8125
+  },
+  "act2_hopping_lantern": {
+    "file": "assets/cutouts_webp/act2_hopping_lantern.webp",
+    "w": 418,
+    "h": 720,
+    "aspect": 0.5806
+  },
+  "act2_lantern_post": {
+    "file": "assets/cutouts_webp/act2_lantern_post.webp",
+    "w": 563,
+    "h": 720,
+    "aspect": 0.7819
+  },
+  "act3_red_bridge": {
+    "file": "assets/cutouts_webp/act3_red_bridge.webp",
+    "w": 960,
+    "h": 484,
+    "aspect": 1.9835
+  },
+  "act3_bathhouse_center": {
+    "file": "assets/cutouts_webp/act3_bathhouse_center.webp",
+    "w": 717,
+    "h": 960,
+    "aspect": 0.7469
+  },
+  "act3_bathhouse_left": {
+    "file": "assets/cutouts_webp/act3_bathhouse_left.webp",
+    "w": 620,
+    "h": 960,
+    "aspect": 0.6458
+  },
+  "act3_bathhouse_right": {
+    "file": "assets/cutouts_webp/act3_bathhouse_right.webp",
+    "w": 560,
+    "h": 960,
+    "aspect": 0.5833
+  },
+  "act3_waterwheel": {
+    "file": "assets/cutouts_webp/act3_waterwheel.webp",
+    "w": 780,
+    "h": 960,
+    "aspect": 0.8125
+  },
+  "act4_haku_dragon": {
+    "file": "assets/cutouts_webp/act4_haku_dragon.webp",
+    "w": 960,
+    "h": 572,
+    "aspect": 1.6783
+  },
+  "act4_shikigami_cluster": {
+    "file": "assets/cutouts_webp/act4_shikigami_cluster.webp",
+    "w": 717,
+    "h": 760,
+    "aspect": 0.9434
+  },
+  "act4_shikigami_single": {
+    "file": "assets/cutouts_webp/act4_shikigami_single.webp",
+    "w": 760,
+    "h": 731,
+    "aspect": 1.0397
+  },
+  "act4_night_cloud": {
+    "file": "assets/cutouts_webp/act4_night_cloud.webp",
+    "w": 760,
+    "h": 554,
+    "aspect": 1.3718
+  },
+  "act4_full_moon": {
+    "file": "assets/cutouts_webp/act4_full_moon.webp",
+    "w": 760,
+    "h": 607,
+    "aspect": 1.2521
+  },
+  "act5_noface": {
+    "file": "assets/cutouts_webp/act5_noface.webp",
+    "w": 516,
+    "h": 900,
+    "aspect": 0.5733
+  },
+  "act5_byobu_screen": {
+    "file": "assets/cutouts_webp/act5_byobu_screen.webp",
+    "w": 900,
+    "h": 700,
+    "aspect": 1.2857
+  },
+  "act5_banquet_table": {
+    "file": "assets/cutouts_webp/act5_banquet_table.webp",
+    "w": 886,
+    "h": 589,
+    "aspect": 1.5042
+  },
+  "act5_susuwatari": {
+    "file": "assets/cutouts_webp/act5_susuwatari.webp",
+    "w": 711,
+    "h": 687,
+    "aspect": 1.0349
+  },
+  "act6_sea_train": {
+    "file": "assets/cutouts_webp/act6_sea_train.webp",
+    "w": 960,
+    "h": 456,
+    "aspect": 2.1053
+  },
+  "act6_island_house": {
+    "file": "assets/cutouts_webp/act6_island_house.webp",
+    "w": 960,
+    "h": 660,
+    "aspect": 1.4545
+  },
+  "act3_wheel_disc": {
+    "file": "assets/cutouts_webp/act3_wheel_disc.webp",
+    "w": 768,
+    "h": 768,
+    "aspect": 1.0
+  },
+  "act3_wheel_stand": {
+    "file": "assets/cutouts_webp/act3_wheel_stand.webp",
+    "w": 633,
+    "h": 437,
+    "aspect": 1.4485
+  },
+  "act6_sunset_cloud": {
+    "file": "assets/cutouts_webp/act6_sunset_cloud.webp",
+    "w": 760,
+    "h": 554,
+    "aspect": 1.3718
+  }
+}

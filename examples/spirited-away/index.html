@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Spirited Away — Papercraft Scrollytelling v2.8</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; height: 100%; overflow: hidden;
+  background: #1b1815;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  user-select: none;
+}
+#stage { position: fixed; inset: 0; width: 100vw; height: 100vh; }
+canvas { display: block; width: 100% !important; height: 100% !important; }
+
+#bookmark {
+  position: fixed; top: 22px; left: 26px; z-index: 20;
+  background: rgba(247, 238, 220, 0.93);
+  color: #312319;
+  border: 2px solid #4d3828;
+  border-radius: 4px;
+  padding: 12px 18px;
+  max-width: 350px;
+  box-shadow: 4px 5px 0 rgba(40, 26, 16, 0.28);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+#bookmark .tag {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #9e3d2d; font-weight: 700; margin-bottom: 4px;
+}
+#bookmark h1 { font-size: 19px; line-height: 1.2; margin-bottom: 4px; }
+#bookmark p { font-size: 12.5px; color: #5c4635; line-height: 1.35; font-style: italic; }
+
+#dock {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 20;
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(247, 238, 220, 0.92);
+  border: 2px solid #4d3828;
+  border-radius: 999px;
+  padding: 7px 14px;
+  box-shadow: 0 8px 24px rgba(20, 12, 6, 0.32);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+#dock button {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 12px; font-weight: 600;
+  color: #36251a; background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  padding: 6px 12px; cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+#dock button:hover { background: rgba(158, 61, 45, 0.12); border-color: rgba(158, 61, 45, 0.35); }
+#dock button.active { background: #9e3d2d; color: #fbf4e6; border-color: #6b2418; }
+.sep { width: 1px; height: 18px; background: rgba(77, 56, 40, 0.25); }
+
+#rail {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 20;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: opacity 0.35s ease;
+}
+.dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: rgba(247, 238, 220, 0.55);
+  border: 1.5px solid #4d3828;
+  cursor: pointer; transition: all 0.2s ease;
+}
+.dot.active { background: #9e3d2d; transform: scale(1.35); }
+
+#toast {
+  position: fixed; top: 22px; right: 26px; z-index: 20;
+  background: rgba(45, 32, 22, 0.86); color: #f8ecd5;
+  font-family: system-ui, sans-serif; font-size: 12px;
+  padding: 7px 14px; border-radius: 999px;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+}
+#toast.show { opacity: 1; }
+
+body.hud-hidden #bookmark,
+body.hud-hidden #dock,
+body.hud-hidden #rail { opacity: 0; pointer-events: none; transform: translateY(10px); }
+body.hud-hidden #dock { transform: translate(-50%, 16px); }
+
+#hint-restore {
+  position: fixed; bottom: 12px; right: 16px; z-index: 25;
+  font-family: system-ui, sans-serif; font-size: 11px;
+  color: rgba(255,255,255,0.45); opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+body.hud-hidden #hint-restore { opacity: 1; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<div id="stage"></div>
+
+<div id="bookmark">
+  <div class="tag">Papercraft Scrollytelling v2.8</div>
+  <h1 id="act-title">I. The Forest Torii</h1>
+  <p id="act-sub">Chihiro crosses the autumn gate toward the clocktower tunnel</p>
+</div>
+
+<div id="rail"></div>
+<div id="toast"></div>
+
+<div id="dock">
+  <button id="btn-play" title="Space">▶ Auto-Play</button>
+  <button id="btn-speed" title="Playback speed">1.0×</button>
+  <div class="sep"></div>
+  <button id="btn-fold" title="F — Fold Flat Blueprint Mode">Fold Flat</button>
+  <button id="btn-dof" class="active" title="Optical Tilt-Shift Macro Lens">Tilt-Shift</button>
+  <button id="btn-sound" title="M — Tactile Paper Foley & Music Box">Sound Off</button>
+  <div class="sep"></div>
+  <button id="btn-hide" title="H — Hide HUD for clean 16:9 recording">Hide UI (H)</button>
+</div>
+<div id="hint-restore">Press H to show controls</div>
+
+<script type="module">
+import { initSpiritedAwayDiorama, ACTS } from './scene.js';
+
+function wireUI(app, ACTS) {
+  const titleEl = document.getElementById('act-title');
+  const subEl = document.getElementById('act-sub');
+  const btnPlay = document.getElementById('btn-play');
+  const btnSpeed = document.getElementById('btn-speed');
+  const btnFold = document.getElementById('btn-fold');
+  const btnDof = document.getElementById('btn-dof');
+  const btnSound = document.getElementById('btn-sound');
+  const btnHide = document.getElementById('btn-hide');
+  const rail = document.getElementById('rail');
+  const toast = document.getElementById('toast');
+
+  const speeds = [0.6, 1.0, 1.4];
+  let speedIdx = 1;
+  let dofOn = true;
+
+  const dots = ACTS.map((act) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    d.title = act.title;
+    d.addEventListener('click', () => { app.director.autoPlay = false; app.director.jumpTo(act.t); });
+    rail.appendChild(d);
+    return d;
+  });
+
+  function togglePlay() {
+    if (app.director.currentT > 0.985) app.director.jumpTo(0);
+    app.director.autoPlay = !app.director.autoPlay;
+    btnPlay.classList.toggle('active', app.director.autoPlay);
+    btnPlay.textContent = app.director.autoPlay ? '⏸ Pause' : '▶ Auto-Play';
+  }
+
+  btnPlay.addEventListener('click', togglePlay);
+  btnSpeed.addEventListener('click', () => {
+    speedIdx = (speedIdx + 1) % speeds.length;
+    app.director.autoSpeed = speeds[speedIdx];
+    btnSpeed.textContent = speeds[speedIdx].toFixed(1) + '×';
+  });
+  btnFold.addEventListener('click', () => {
+    const flat = app.toggleFoldFlat();
+    btnFold.classList.toggle('active', flat);
+    btnFold.textContent = flat ? 'Unfold 3D' : 'Fold Flat';
+  });
+  btnDof.addEventListener('click', () => {
+    dofOn = !dofOn;
+    app.setTiltShift(dofOn);
+    btnDof.classList.toggle('active', dofOn);
+  });
+  btnSound.addEventListener('click', () => {
+    const on = app.foley.toggle();
+    btnSound.classList.toggle('active', on);
+    btnSound.textContent = on ? 'Sound On' : 'Sound Off';
+  });
+  btnHide.addEventListener('click', () => document.body.classList.toggle('hud-hidden'));
+
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
+    else if (e.key === 'h' || e.key === 'H') document.body.classList.toggle('hud-hidden');
+    else if (e.key === 'f' || e.key === 'F') btnFold.click();
+    else if (e.key === 'm' || e.key === 'M') btnSound.click();
+  });
+
+  window.addEventListener('papercraft:act', (e) => {
+    const act = e.detail;
+    titleEl.textContent = act.title;
+    subEl.textContent = act.sub;
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === act.id - 1));
+  });
+
+  window.addEventListener('papercraft:progress', (e) => {
+    btnPlay.classList.toggle('active', e.detail.autoPlay);
+    btnPlay.textContent = e.detail.autoPlay ? '⏸ Pause' : '▶ Auto-Play';
+  });
+
+  let toastTimer = null;
+  window.addEventListener('papercraft:interact', (e) => {
+    toast.textContent = '✦ ' + e.detail;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+  });
+}
+
+
+fetch('./assets/manifest.json')
+  .then(r => r.json())
+  .then(manifest => {
+    const assetMap = {};
+    for (const [k, v] of Object.entries(manifest)) {
+      assetMap[k] = { url: './' + v.file, aspect: v.aspect };
+    }
+    const app = initSpiritedAwayDiorama(document.getElementById('stage'), assetMap);
+    wireUI(app, ACTS);
+  });
+</script>
+</body>
+</html>
